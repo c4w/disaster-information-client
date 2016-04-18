@@ -2,6 +2,7 @@
 <html lang="ja" ng-app="disaster-information-client">
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title translate="TITLE"></title>
     <script src="./bower_components/angular/angular.min.js"></script>
     <script src="./bower_components/angular-translate/angular-translate.min.js"></script>
@@ -12,6 +13,7 @@
   </head>
   <body>
     <div class="container">
+
       <header class="header">
         <div class="header-console" ng-controller="consoleCtrl">
           <h2 class="hide" translate="CONSOLE"></h2>
@@ -42,6 +44,9 @@
           <p translate="DESCRIPTION"></p>
         </div>
       </header>
+
+
+
 
 
       <main ng-controller="contentCtrl">

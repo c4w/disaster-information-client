@@ -4,7 +4,7 @@
   "description": "災害情報デモサイト",
   "main": "app.js",
   "scripts": {
-    "test": ""
+    "test": "ls ./bower_components; ls ./src/app.js; ls ./src/style.css"
   },
   "repository": {
     "type": "git",
