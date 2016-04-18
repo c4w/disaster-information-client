@@ -1,9 +1,9 @@
 # 災害情報
 
-[![Build Status Images](https://travis-ci.org/KamataRyo/disaster-information-client.svg)](https://travis-ci.org/KamataRyo/disaster-information-client)
+[![Build Status Images](https://travis-ci.org/c4w/disaster-information-client.svg)](https://travis-ci.org/c4w/disaster-information-client)
 
 ## デモサイト
-http://kamataryo.github.io/disaster-information-client
+http://c4w.github.io/disaster-information-client
 
 ## 概要
 

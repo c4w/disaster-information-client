@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KamataRyo/disaster-information-client.git"
+    "url": "git+https://github.com/c4w/disaster-information-client.git"
   },
   "author": "kamataryo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/KamataRyo/disaster-information-client/issues"
+    "url": "https://github.com/c4w/disaster-information-client/issues"
   },
-  "homepage": "https://github.com/KamataRyo/disaster-information-client#readme",
+  "homepage": "https://github.com/c4w/disaster-information-client#readme",
   "devDependencies": {
     "bower": "^1.7.9"
   }
