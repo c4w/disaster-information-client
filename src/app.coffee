@@ -15,6 +15,16 @@ app.config [
 ]
 
 
+app.directive 'entryArchive', ->
+    return {
+        restrict: 'E'
+        transclude: true
+        replace: true
+        templateUrl: 'templates/entry-archive.html'
+    }
+
+
+
 app.controller 'consoleCtrl', [
     '$scope'
     '$translate'
@@ -30,17 +40,17 @@ app.controller 'contentCtrl', [
     '$scope'
     ($http, $translate, $scope) ->
         $http { Method: 'GET', url: ENDPOINT }
-            .then (res) ->
+            .then ({data}) ->
                 $scope.err = false
                 dateDescOrder = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
 
-                res.data.entries
+                data.entries
                     .sort dateDescOrder
                     .forEach (entry) ->
                         rawDate = Date.parse(entry.date);
                         entry.date = new Date(rawDate).toLocaleDateString()
                         entry.time = new Date(rawDate).toLocaleTimeString()
-                $scope.entries = res.data.entries
+                $scope.entries = data.entries
 
             .catch (err) -> $scope.err = true
 ]

@@ -42,3 +42,14 @@
         }
     }
 }
+
+
+.entry-title-excerpt {
+    font-size: 1em;
+}
+
+.entry-body-excerpt {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+}

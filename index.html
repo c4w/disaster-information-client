@@ -45,12 +45,11 @@
         </div>
       </header>
 
-
-
-
-
       <main ng-controller="contentCtrl">
         <div class="alert alert-danger" role="alert" ng-show="err" translate="MESSAGES.ERROR"></div>
+
+        <entry-archive></entry-archive>
+
 
         <article class="entry-content" ng-repeat="entry in entries" ng-hide="err">
           <h2 class="entry-title" ng-bind="entry.title"></h2>
