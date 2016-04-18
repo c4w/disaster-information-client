@@ -4,8 +4,7 @@
   "description": "災害情報デモサイト",
   "main": "app.js",
   "scripts": {
-    "test": "",
-    "build": "./node_modules/bower/bin/bower install"
+    "test": ""
   },
   "repository": {
     "type": "git",

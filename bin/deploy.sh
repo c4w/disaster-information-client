@@ -16,16 +16,16 @@ rm -rf .git
 rm -r .gitignore
 
 echo "bin
-coffee
 node_modules
-sass
 bower.json
+package.json
 gulpfile.coffee
 gulpfile.js
 .bowerrc
 .travis.yml
-.gitignore
-package.json" > .gitignore
+src/*.coffee
+src/*.scss
+.gitignore" > .gitignore
 
 git init
 git config user.name "kamataryo"
