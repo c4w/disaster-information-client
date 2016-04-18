@@ -6,7 +6,7 @@ branches:
   only:
     - master
 
-before_script: bower install
+before_script: npm run build
 
 script: ls ./bower_components
 

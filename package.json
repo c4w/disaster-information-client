@@ -1,0 +1,23 @@
+{
+  "name": "disaster-information-client",
+  "version": "1.0.0",
+  "description": "災害情報デモサイト",
+  "main": "app.js",
+  "scripts": {
+    "test": "",
+    "build": "./node_modules/bower/bin/bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KamataRyo/disaster-information-client.git"
+  },
+  "author": "kamataryo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KamataRyo/disaster-information-client/issues"
+  },
+  "homepage": "https://github.com/KamataRyo/disaster-information-client#readme",
+  "devDependencies": {
+    "bower": "^1.7.9"
+  }
+}
