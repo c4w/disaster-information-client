@@ -1,0 +1,19 @@
+{
+  "TITLE": "災害情報（テストサイトです）",
+  "SUBTITLE": "掲載されている情報は全てダミーです。",
+  "CONSOLE": "コンソール",
+  "POSTED_ON": "投稿日時",
+  "TAGS": "タグ",
+  "LANGUAGE": "言語",
+  "POSTED_CONTENT": "投稿内容",
+  "MESSAGES": {
+      "ERROR": "なんらかのエラーです"
+  },
+  "AFTER_POST":{
+    "NOW": "今",
+    "SEC": "秒前",
+    "MIN": "分前",
+    "HOUR": "時間前",
+    "DAY": "日前"
+  }
+}

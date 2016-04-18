@@ -2,37 +2,51 @@
 <html lang="ja" ng-app="bss">
 <head>
   <meta charset="UTF-8">
-  <title>災害情報掲示板（テスト）</title>
+  <title translate="TITLE"></title>
   <script src="./bower_components/angular/angular.min.js"></script>
+  <script src="./bower_components/angular-translate/angular-translate.min.js"></script>
+  <script src="./bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
   <script src="./app.js"></script>
 </head>
 <body>
-  <h1>災害情報掲示板（テスト）</h1>
-  <p>これは、テストです。掲載されている情報は全てダミーです。</p>
+  <h1 translate="TITLE"></h1>
+  <p translate="SUBTITLE"></p>
+
+  <div class="console" ng-controller="consoleCtrl">
+    <form>
+      <h2 translate="CONSOLE"></h2>
+      <h3 translate="LANGUAGE"></h3>
+      <input type="radio" name="language" ng-model="key" ng-change="changeLanguage(key)" value="ja" id="language-ja">
+      <label for="language-ja" accesskey="j">日本語</label>
+      <input type="radio" name="language" ng-model="key" ng-change="changeLanguage(key)" value ="en" id="language-en">
+      <label for="language-en" accesskey="e">English</label>
+    </form>
+  </div>
 
   <main ng-controller="contentCtrl">
-    <div ng-show="err">何かのエラーです。</div>
+    <div ng-show="err" translate="MESSAGES.ERROR"></div>
     <article ng-repeat="entry in entries" ng-hide="err">
         <h2 class="entry-title">{{entry.title}}</h2>
         <div class="entry-meta">
           <ul>
             <li>
-              <h3>投稿日時</h3>
+              <h3 translate="POSTED_ON"></h3>
               <div>{{entry.date}} {{entry.time}} {{entry.dateTimeDiff}}</div>
             </li>
 
             <li>
-              <h3>タグ</h3>
+              <h3 translate="TAGS"></h3>
               <ul>
                 <li ng-repeat="tag in entry.tags">{{tag}}</li>
               </ul>
             </li>
 
             <li>
-              <h3>言語</h3>
+              <h3 translate="LANGUAGE"></h3>
               <div>{{entry.lang}}</div>
             </li>
         </div>
+        <h3 translate="POSTED_CONTENT"></h3>
         <div class="entry-content">{{entry.body}}</div>
     </article>
   </main>

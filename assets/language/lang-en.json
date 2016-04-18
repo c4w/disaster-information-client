@@ -1,0 +1,19 @@
+{
+  "TITLE": "Disaster informations(this is a test site.)",
+  "SUBTITLE": "All information is dummy.",
+  "CONSOLE": "console",
+  "POSTED_ON": "posted on",
+  "TAGS": "tag(s)",
+  "LANGUAGE": "language",
+  "POSTED_CONTENT": "posted content",
+  "MESSAGES": {
+      "ERROR": "An error may happens."
+  },
+  "AFTER_POST":{
+    "NOW": "just now",
+    "SEC": "second(s) later",
+    "MIN": "minute(s) later",
+    "HOUR": "hour(s) later",
+    "DAY": "day(s) later"
+  }
+}
