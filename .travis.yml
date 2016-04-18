@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - 0.11
+
+branches:
+  only:
+    - master
+
+before_script: bower install
+
+script: ls ./bower_components
+
+after_success: bash ./bin/deploy.sh
+
+env:
+  global:
+  - GH_REF: github.com/kamataryo/disaster-information-client.git
+  - secure: y7fpFNtblpFUpMIadeyN3bGuUJLrGPIHJ/xQ2G3RI2vcPfaKaO5JYLlEzPjIxQee+E0WHGLEbdNqkISc3Ev5R2z9800d/484LvZ061bE2HF2fVEi/4/6/1f6kShSjuyQT0PGVRvYuKqYI3KFL9lkGRABwp2rxPqhEh3w9pR5EZlq22MpZKPvoIZuwQepU688L22ycX85z90/9xkVMllh3Ne7Dym+NYMYkfm66R+YKLBdaa/EAgjezlPfvJIRvYprP8WS0Rm8/2+4TnOmbN0u7U+5t1l6QNQ5QPz0pPhHNBz9QO+GcEuN6kXI0C7L3hDOQPyz31AE5xMEpYQb/5ZpHtif6G3Ekn1KEgA6XGDqYp9F7cZhzLcRbO1ooV0ZSCrJ3a1PB7Akdvx3yfITvlCu9fabWkMV80aUv3jkU4cy6ytyUGpfqpMf34zz7EQKGTwMSFufKDo8Uu/tPmYmF9cqDbsEw0XSVlvxu/GAq6pzUX2uqdwZuaxMf0EJeumbK91ps3G1l6uFzWJEOY6FJjJ/8XTHEsxP6stMrRDtU8BcOxQuIkq7ZmQX7Qzam6riEQKrCwAIkbp52XU+0RKJi8A2y7olNdMBjFbecuCz7STl5885+DctifBNxsX//UHEMHyM3+4BvQicAqGXFFE+2NiJx1rdr8wTRbkeKd3739Uv3gY=
