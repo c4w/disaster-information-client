@@ -1,72 +1,86 @@
 <!DOCTYPE html>
-<html lang="ja" ng-app="bss">
-<head>
-  <meta charset="UTF-8">
-  <title translate="TITLE"></title>
-  <script src="./bower_components/angular/angular.min.js"></script>
-  <script src="./bower_components/angular-translate/angular-translate.min.js"></script>
-  <script src="./bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
-  <script src="./app.js"></script>
-</head>
-<body>
-  <h1 translate="TITLE"></h1>
-  <p translate="SUBTITLE"></p>
+<html lang="ja" ng-app="disaster-information-client">
+  <head>
+    <meta charset="UTF-8">
+    <title translate="TITLE"></title>
+    <script src="./bower_components/angular/angular.min.js"></script>
+    <script src="./bower_components/angular-translate/angular-translate.min.js"></script>
+    <script src="./bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+    <script src="./app.js"></script>
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="header-console" ng-controller="consoleCtrl">
+          <h2 class="hide" translate="CONSOLE"></h2>
 
-  <div class="console" ng-controller="consoleCtrl">
-    <form>
-      <h2 translate="CONSOLE"></h2>
-      <h3 translate="LANGUAGE"></h3>
-      <input
-        type="radio"
-        name="language"
-        ng-model="key"
-        ng-change="changeLanguage(key)"
-        value="ja"
-        id="language-ja"
-      >
-      <label for="language-ja" accesskey="j">日本語</label>
-      <input
-        type="radio"
-        name="language"
-        ng-model="key"
-        ng-change="changeLanguage(key)"
-        value ="en"
-        id="language-en"
-      >
-      <label for="language-en" accesskey="e">English</label>
-    </form>
-  </div>
+          <form class="text-right">
+            <h3 class="hide" translate="LANGUAGE"></h3>
+            <div class="form-group">
+              <input
+                type="radio"
+                name="language"
+                ng-model="key"
+                ng-change="changeLanguage(key)"
+                value="ja"
+                id="language-ja">
+              <label class="control-label" for="language-ja" accesskey="j">日本語</label>
+              <input
+                type="radio"
+                name="language"
+                ng-model="key"
+                ng-change="changeLanguage(key)"
+                value ="en"
+                id="language-en">
+              <label class="control-label" for="language-en" accesskey="e">English</label>
+            </div><!--.formg-roup-->
+          </form>
 
-  <main ng-controller="contentCtrl">
-    <div ng-show="err" translate="MESSAGES.ERROR"></div>
-    <article ng-repeat="entry in entries" ng-hide="err">
-        <h2 class="entry-title" ng-bind="entry.title"></h2>
-        <div class="entry-meta">
-          <ul>
-            <li>
-              <h3 translate="POSTED_ON"></h3>
-              <div>
-                <span class="date" ng-bind="entry.date"></span>
-                <span class="time" ng-bind="entry.time"></span>
-              </div>
-            </li>
-
-            <li>
-              <h3 translate="TAGS"></h3>
-              <ul>
-                <li ng-repeat="tag in entry.tags" ng-bind="tag"></li>
-              </ul>
-            </li>
-
-            <li>
-              <h3 translate="LANGUAGE"></h3>
-              <div ng-bind="entry.lang"></div>
-            </li>
+          <h1 translate="TITLE"></h1>
+          <p translate="DESCRIPTION"></p>
         </div>
-        <h3 translate="POSTED_CONTENT"></h3>
-        <div class="entry-content" ng-bind="entry.body"></div>
-    </article>
-  </main>
+      </header>
 
-</body>
+
+      <main ng-controller="contentCtrl">
+        <div class="alert alert-danger" role="alert" ng-show="err" translate="MESSAGES.ERROR"></div>
+
+        <article class="entry-content" ng-repeat="entry in entries" ng-hide="err">
+          <h2 class="entry-title" ng-bind="entry.title"></h2>
+            <div class="row">
+            <div class="col-xs-12 col-sm-3">
+              <div class="entry-meta">
+                <ul class="entry-meta-elements">
+                  <li>
+                    <h3 class="entry-meta-head" translate="POSTED_ON"></h3>
+                    <span class="date" ng-bind="entry.date"></span>
+                    <span class="time" ng-bind="entry.time"></span>
+                  </li>
+
+                  <li>
+                    <h3 class="entry-meta-head" translate="TAGS"></h3>
+                    <ul class="entry-tags"><li ng-repeat="tag in entry.tags" ng-bind="tag"></li></ul>
+                  </li>
+
+                  <li>
+                    <h3 class="entry-meta-head" translate="LANGUAGE"></h3>
+                    <span ng-bind="entry.lang"></span>
+                  </li>
+                </ul>
+              </div><!--.entry-meta-->
+            </div><!--.col-->
+
+            <div class="col-xs-12 col-sm-9">
+              <h3 class="hide" translate="POSTED_CONTENT"></h3>
+              <div class="entry-body" ng-bind="entry.body"></div>
+            </div><!--.col-->
+
+          </div><!--.row-->
+        </article><!--.entry-content-->
+      </main>
+
+    </div><!--.container-->
+  </body>
 </html>

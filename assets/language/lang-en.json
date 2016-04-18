@@ -1,6 +1,6 @@
 {
-  "TITLE": "Disaster informations(this is a test site.)",
-  "SUBTITLE": "All information is dummy.",
+  "TITLE": "Disaster informations",
+  "DESCRIPTION": "This is an experimental test site and all information is dummy. Visit <a href=\"https://github.com/c4w/disaster-information\">c4w/disaster-information@Github</a> for more detail.",
   "CONSOLE": "console",
   "POSTED_ON": "posted on",
   "TAGS": "tag(s)",
@@ -8,12 +8,5 @@
   "POSTED_CONTENT": "posted content",
   "MESSAGES": {
       "ERROR": "An error may happens."
-  },
-  "AFTER_POST":{
-    "NOW": "just now",
-    "SEC": "second(s) later",
-    "MIN": "minute(s) later",
-    "HOUR": "hour(s) later",
-    "DAY": "day(s) later"
   }
 }

@@ -1,6 +1,6 @@
 {
-  "TITLE": "災害情報（テストサイトです）",
-  "SUBTITLE": "掲載されている情報は全てダミーです。",
+  "TITLE": "災害情報",
+  "DESCRIPTION": "これはテストサイトです。掲載されている情報は全てダミーです。このサイトは、災害情報を配信するための実験的なプロジェクトの一環として作成したものです。詳細は、<a href=\"https://github.com/c4w/disaster-information\">c4w/GitHubページを使った災害情報配信用のJSON API@Github</a>をご覧ください。",
   "CONSOLE": "コンソール",
   "POSTED_ON": "投稿日時",
   "TAGS": "タグ",
@@ -8,12 +8,5 @@
   "POSTED_CONTENT": "投稿内容",
   "MESSAGES": {
       "ERROR": "なんらかのエラーです"
-  },
-  "AFTER_POST":{
-    "NOW": "今",
-    "SEC": "秒前",
-    "MIN": "分前",
-    "HOUR": "時間前",
-    "DAY": "日前"
   }
 }

@@ -1,0 +1,44 @@
+.header {
+    margin-top: .5em;
+    border-bottom: 1px solid #666;
+}
+
+.entry-content {
+    padding: 0 1em 1em;
+    border-bottom: 1px dashed #666;
+}
+
+.entry-content:last-child {
+    border-bottom: none;
+}
+.entry-title {
+    font-size: 1.5em;
+}
+
+.entry-meta-elements, .entry-tags {
+    padding: 0;
+    list-style: none;
+}
+.entry-tags {
+    display:inline;
+}
+.entry-meta-elements li {
+    display: block;
+}
+
+.entry-tags li {
+    display: inline;
+}
+.entry-tags li:after {
+    content: ' ';
+}
+.entry-tags li:last-child:after {
+    content: none;
+}
+
+
+.entry-meta-head {
+    font-weight: bold;
+    font-size:1em;
+    display: inline;
+}

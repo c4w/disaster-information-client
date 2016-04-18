@@ -1,6 +1,6 @@
 var ENDPOINT = 'http://api.c4w.jp/api/v1/pages.json';
 var LANG_KEY_DEFAULT = 'ja';
-var app = angular.module('bss', ['pascalprecht.translate']);
+var app = angular.module('disaster-information-client', ['pascalprecht.translate']);
 
 app.config([
     '$translateProvider',
