@@ -3,6 +3,12 @@ ENDPOINT = 'http://api.c4w.jp/api/v1/pages.json'
 app = module 'disaster-information-client'
 beforeEach app
 
+
+describe 'test of test', ->
+    it 'should pass', ->
+        expect true
+            .toEqual true
+
 #
 # describe 'test of services', ->
 #
