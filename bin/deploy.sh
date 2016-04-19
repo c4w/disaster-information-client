@@ -16,6 +16,7 @@ rm -rf .git
 rm -r .gitignore
 
 echo "bin
+spec
 node_modules
 bower.json
 package.json

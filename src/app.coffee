@@ -1,6 +1,9 @@
 ENDPOINT         = 'http://api.c4w.jp/api/v1/pages.json'
 LANG_KEY_DEFAULT = 'ja'
-app = angular.module 'disaster-information-client', ['pascalprecht.translate']
+app = angular.module 'disaster-information-client', [
+    'pascalprecht.translate'
+    'ngSanitize'
+]
 
 app.config [
     '$translateProvider'
@@ -22,6 +25,16 @@ app.directive 'entryArchive', ->
         replace: true
         templateUrl: 'templates/entry-archive.html'
     }
+
+app.service 'loadEntries', [
+    '$http'
+    ($http) ->
+        (url) ->
+            method = 'GET'
+            url = if url? then url else ENDPOINT
+            $http { method, url }
+                .then(console.log 'do something')
+]
 
 
 
@@ -50,7 +63,7 @@ app.controller 'contentCtrl', [
                         rawDate = Date.parse(entry.date);
                         entry.date = new Date(rawDate).toLocaleDateString()
                         entry.time = new Date(rawDate).toLocaleTimeString()
+                        entry.body = entry.body
                 $scope.entries = data.entries
-
             .catch (err) -> $scope.err = true
 ]

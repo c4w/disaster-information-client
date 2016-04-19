@@ -4,7 +4,10 @@
   "description": "災害情報デモサイト",
   "main": "app.js",
   "scripts": {
-    "test": "ls ./bower_components; ls ./src/app.js; ls ./src/style.css"
+    "test": "npm run test-compile; npm run test-karma",
+    "test-compile": "ls ./src/app.js; ls ./src/style.css",
+    "test-karma": "node_modules/gulp/bin/gulp.js; ./node_modules/karma/bin/karma start ./spec/karma.conf.coffee --single-run --browsers PhantomJS",
+    "test-karma-local": "node_modules/gulp/bin/gulp.js; ./node_modules/karma/bin/karma start ./spec/karma.conf.coffee --browsers PhantomJS"
   },
   "repository": {
     "type": "git",
@@ -17,6 +20,7 @@
   },
   "homepage": "https://github.com/c4w/disaster-information-client#readme",
   "devDependencies": {
+    "angular-mocks": "^1.5.5",
     "bower": "^1.7.9",
     "coffee-script": "^1.10.0",
     "gulp": "^3.9.1",
@@ -26,6 +30,11 @@
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^2.2.0",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^1.5.3"
+    "gulp-uglify": "^1.5.3",
+    "jasmine": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-jasmine": "^0.3.8",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "phantomjs-prebuilt": "^2.1.7"
   }
 }
