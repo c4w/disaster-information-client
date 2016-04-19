@@ -36,9 +36,24 @@ app.run [
             ja: '日本語'
             en: 'English'
         }
+
+        $http { Method: 'GET', url: getEndpoint 'ja' }
+            .then ({data}) ->
+                $rootScope.error = false
+                desc = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
+
+                data.entries
+                    .sort desc
+                    .forEach (entry) ->
+                        rawDate = Date.parse(entry.date);
+                        entry.date = new Date(rawDate).toLocaleDateString()
+                        entry.time = new Date(rawDate).toLocaleTimeString()
+                        entry.body = entry.body # htmlがエスケープされるので、所定の処理が必要
+                $rootScope.entries = data.entries
+            .catch (err) ->
+                $rootScope.error = true
 ]
 
-# mainCtrlの中にないといけない
 app.directive 'entryArchive', ->
     return {
         restrict: 'E'
@@ -54,7 +69,7 @@ app.directive 'languageSwitch', ->
         transclude: true
         replace: true
         templateUrl: 'templates/language-switch.html'
-        controller:[
+        controller: [
             '$scope'
             '$rootScope'
             '$translate'
@@ -68,23 +83,41 @@ app.directive 'languageSwitch', ->
 
 
 
-app.controller 'mainCtrl', [
-    '$http'
-    '$translate'
-    '$scope'
-    ($http, $translate, $scope) ->
-        $http { Method: 'GET', url: getEndpoint 'ja' }
-            .then ({data}) ->
-                $scope.err = false
-                desc = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
+app.directive 'errorWindow', ->
+    return {
+        restrict: 'E'
+        replace: true
+        templateUrl: 'templates/error-window.html'
+    }
 
-                data.entries
-                    .sort desc
-                    .forEach (entry) ->
-                        rawDate = Date.parse(entry.date);
-                        entry.date = new Date(rawDate).toLocaleDateString()
-                        entry.time = new Date(rawDate).toLocaleTimeString()
-                        entry.body = entry.body # htmlがエスケープされるので、所定の処理が必要
-                $scope.entries = data.entries
-            .catch (err) -> $scope.err = true
+
+app.directive 'entrySingle', ->
+    return {
+        restrict: 'E'
+        transclude: true
+        replace: true
+        templateUrl: 'templates/entry-single.html'
+
+        link: (scope, element, attr) ->
+            id = attr.id
+            scope.entry = {
+                title: id
+            }
+    }
+
+app.controller 'headCtrl', [
+    '$scope'
+    ($scope) ->
+        $scope.entrySelected = (entry) ->
+            $scope.$emit 'entrySelected', {entry}
+]
+
+
+
+app.controller 'mainCtrl', [
+    '$scope'
+    '$rootScope'
+    ($scope, $rootScope) ->
+        $rootScope.$on 'entrySelected', (event, {entry}) ->
+            $scope.entry = entry
 ]
