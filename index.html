@@ -16,44 +16,19 @@
     <div class="container">
 
       <header class="header">
-        <div class="header-console" ng-controller="consoleCtrl">
           <h2 class="hide" translate="CONSOLE"></h2>
-
-          <form class="text-right">
-            <h3 class="hide" translate="LANGUAGE"></h3>
-            <div class="form-group">
-              <input
-                type="radio"
-                name="language"
-                ng-model="key"
-                ng-change="changeLanguage(key)"
-                value="ja"
-                id="language-ja">
-              <label class="control-label" for="language-ja" accesskey="j">日本語</label>
-              <input
-                type="radio"
-                name="language"
-                ng-model="key"
-                ng-change="changeLanguage(key)"
-                value ="en"
-                id="language-en">
-              <label class="control-label" for="language-en" accesskey="e">English</label>
-            </div><!--.formg-roup-->
-          </form>
-
+          <language-switch></language-switch>
           <h1 translate="TITLE"></h1>
           <p translate="DESCRIPTION"></p>
-        </div>
       </header>
 
-      <main ng-controller="contentCtrl">
+      <main ng-controller="mainCtrl">
         <div class="alert alert-danger" role="alert" ng-show="err" translate="MESSAGES.ERROR"></div>
-
         <entry-archive></entry-archive>
 
 
         <article class="entry-content" ng-repeat="entry in entries" ng-hide="err">
-          <h2 class="entry-title" ng-bind="entry.title"></h2>
+          <h2 ng-attr-id="{{entry.url}}" class="entry-title" ng-bind="entry.title"></h2>
             <div class="row">
             <div class="col-xs-12 col-sm-3">
               <div class="entry-meta">

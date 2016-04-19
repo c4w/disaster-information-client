@@ -1,11 +1,11 @@
-<article class="entry-content">
+<article class="entry-content"  ng-repeat="entry in entries" ng-hide="err">
   <header class="entry-header">
     <div class="entry-meta">
       <h2 class="entry-title-excerpt">
-        <a href="#!2016/04/02/xxxx.html">タイトル</a>
-        <span class="entry-meta-excerpt">2014/12/34</span> <!--  ng-bind="entry.date" -->
+        <a ng-href="#{{entry.url}}" ng-bind="entry.title"></a>
+        <span class="entry-meta-excerpt" ng-bind="entry.date"></span>
       </h2>
     </div><!--.entry-meta-->
-    <div class="entry-body-excerpt">あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ</div>
+    <div class="entry-body-excerpt" ng-bind="entry.body"></div>
   </header>
 </article>
