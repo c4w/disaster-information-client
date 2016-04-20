@@ -54,20 +54,26 @@ app.run [
                             entry.time = new Date(rawDate).toLocaleTimeString()
                             entry.body = entry.body # need sanitization?
                     $rootScope.entries[locale] = data.entries
-                    console.log locale
                     # .shim always refer selected locale
                     if locale is $rootScope.selectedLocale
                         $rootScope.entries.shim = $rootScope.entries[locale]
 
 ]
 
-# mainCtrlの中にないといけない
 app.directive 'entryArchive', ->
     return {
         restrict: 'E'
         transclude: true
         replace: true
         templateUrl: 'templates/entry-archive.html'
+    }
+
+app.directive 'singleEntry', ->
+    return {
+        restrict: 'E'
+        transclude: true
+        replace: true
+        templateUrl: 'templates/single-entry.html'
     }
 
 
@@ -87,7 +93,6 @@ app.directive 'languageSwitch', ->
                     $translate.use(key)
                     $rootScope.selectedLocale = key
                     $rootScope.entries.shim = $rootScope.entries[key]
-                    console.log $rootScope.entries.shim
         ]
     }
 
