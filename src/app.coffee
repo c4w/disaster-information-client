@@ -10,7 +10,7 @@ app.config [
     ($translateProvider) ->
 
         $translateProvider.useStaticFilesLoader {
-            prefix: 'language/lang-'
+            prefix: 'language/'
             suffix: '.json'
         }
         #$translateProvider.useSanitizeValueStrategy null
