@@ -31,11 +31,34 @@ app.run [
         #         $rootScope.locales = locales
 
         # ロケール一覧を取得してくる仕組みは未実装
-        $rootScope.locales = ['ja', 'en']
+        locales = ['ja', 'en']
+        $rootScope.locales = locales
+        $rootScope.selectedLocale = locales[1]
+
         $rootScope.languageLabel = {
             ja: '日本語'
             en: 'English'
         }
+
+        $rootScope.entries = {}
+        locales.forEach (locale) ->
+            $http { Method: 'GET', url: getEndpoint locale }
+                .then ({data}) ->
+
+                    desc = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
+                    data.entries
+                        .sort desc
+                        .forEach (entry) ->
+                            rawDate = Date.parse(entry.date);
+                            entry.date = new Date(rawDate).toLocaleDateString()
+                            entry.time = new Date(rawDate).toLocaleTimeString()
+                            entry.body = entry.body # need sanitization?
+                    $rootScope.entries[locale] = data.entries
+                    console.log locale
+                    # .shim always refer selected locale
+                    if locale is $rootScope.selectedLocale
+                        $rootScope.entries.shim = $rootScope.entries[locale]
+
 ]
 
 # mainCtrlの中にないといけない
@@ -59,32 +82,19 @@ app.directive 'languageSwitch', ->
             '$rootScope'
             '$translate'
             ($scope, $rootScope, $translate) ->
-                $scope.key = $scope.locales[0]
+                $scope.key = $rootScope.selectedLocale
                 $scope.changeLanguage = (key) ->
                     $translate.use(key)
                     $rootScope.selectedLocale = key
+                    $rootScope.entries.shim = $rootScope.entries[key]
+                    console.log $rootScope.entries.shim
         ]
     }
 
 
 
 app.controller 'mainCtrl', [
-    '$http'
-    '$translate'
     '$scope'
-    ($http, $translate, $scope) ->
-        $http { Method: 'GET', url: getEndpoint 'ja' }
-            .then ({data}) ->
-                $scope.err = false
-                desc = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
-
-                data.entries
-                    .sort desc
-                    .forEach (entry) ->
-                        rawDate = Date.parse(entry.date);
-                        entry.date = new Date(rawDate).toLocaleDateString()
-                        entry.time = new Date(rawDate).toLocaleTimeString()
-                        entry.body = entry.body # htmlがエスケープされるので、所定の処理が必要
-                $scope.entries = data.entries
-            .catch (err) -> $scope.err = true
+    ($scope) ->
+        return
 ]
