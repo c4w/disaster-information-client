@@ -16,19 +16,21 @@
     <div class="container">
 
       <header class="header">
+        
           <h2 class="hide" translate="CONSOLE"></h2>
           <language-switch></language-switch>
+
           <h1 translate="TITLE"></h1>
           <p translate="DESCRIPTION"></p>
 
+          <h2 class="hide" translate="ARCHIVES"></h2>
           <entry-archive></entry-archive>
-
 
       </header>
 
       <main>
-        <div class="alert alert-danger" role="alert" ng-show="err" translate="MESSAGES.ERROR"></div>
 
+        <div class="alert alert-danger" role="alert" ng-show="err" translate="MESSAGES.ERROR"></div>
 
         <single-entry></single-entry>
 

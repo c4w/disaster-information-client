@@ -68,8 +68,7 @@ app.directive 'entryArchive', ->
         templateUrl: 'templates/entry-archive.html'
         controller: [
             '$scope'
-            '$rootScope'
-            ($scope, $rootScope) ->
+            ($scope) ->
                 $scope.selectEntry = (entry) ->
                     $scope.$emit 'entrySelected', {entry}
         ]
