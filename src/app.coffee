@@ -81,12 +81,11 @@ app.directive 'singleEntry', ->
         transclude: true
         replace: true
         templateUrl: 'templates/single-entry.html'
-        link: [
+        controller: [
             '$scope'
             '$rootScope'
             ($scope, $rootScope) ->
-                $scope.$on 'entrySelected', (event, {entry}) ->
-                    alert entry
+                $rootScope.$on 'entrySelected', (event, {entry}) ->
                     $scope.entry = entry
         ]
     }
@@ -110,11 +109,3 @@ app.directive 'languageSwitch', ->
                     $rootScope.entries.shim = $rootScope.entries[key]
         ]
     }
-
-
-
-app.controller 'mainCtrl', [
-    '$scope'
-    ($scope) ->
-        return
-]
