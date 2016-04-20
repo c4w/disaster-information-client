@@ -33,7 +33,7 @@ app.run [
         # ロケール一覧を取得してくる仕組みは未実装
         locales = ['ja', 'en']
         $rootScope.locales = locales
-        $rootScope.selectedLocale = locales[1]
+        $rootScope.selectedLocale = locales[0]
 
         $rootScope.languageLabel = {
             ja: '日本語'
@@ -66,6 +66,13 @@ app.directive 'entryArchive', ->
         transclude: true
         replace: true
         templateUrl: 'templates/entry-archive.html'
+        controller: [
+            '$scope'
+            '$rootScope'
+            ($scope, $rootScope) ->
+                $scope.selectEntry = (entry) ->
+                    $scope.$emit 'entrySelected', {entry}
+        ]
     }
 
 app.directive 'singleEntry', ->
@@ -74,6 +81,14 @@ app.directive 'singleEntry', ->
         transclude: true
         replace: true
         templateUrl: 'templates/single-entry.html'
+        link: [
+            '$scope'
+            '$rootScope'
+            ($scope, $rootScope) ->
+                $scope.$on 'entrySelected', (event, {entry}) ->
+                    alert entry
+                    $scope.entry = entry
+        ]
     }
 
 
@@ -83,7 +98,7 @@ app.directive 'languageSwitch', ->
         transclude: true
         replace: true
         templateUrl: 'templates/language-switch.html'
-        controller:[
+        controller: [
             '$scope'
             '$rootScope'
             '$translate'
