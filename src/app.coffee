@@ -119,24 +119,19 @@ app.service 'acquireEntries', [
 ]
 
 
-app.service 'route', [
+app.service 'router', [
     '$location'
     '$rootScope'
     ($location, $rootScope) ->
-        $rootScope.$watch ->
-            $location.path()
-        , (aa) ->
-            true
-
-
-        # return {
-        #     getRoutedEntry: ->
-        #         result = false
-        #         $rootScope.locales.forEach (locale) ->
-        #             $rootScope.entries[locale].forEach (entry) ->
-        #                 if entry.url is $location.path() then result = entry
-        #         return result
-        # }
+        $rootScope.$on 'entriesLoaded', ->
+            $rootScope.$watch ->
+                $location.path()
+            , (url) ->
+                if url isnt ''
+                    entry = ($rootScope.entries.filter (entry) ->
+                        entry.url is url
+                    )[0]
+                    $rootScope.$emit 'entrySelected', {entry}
 ]
 
 
@@ -147,12 +142,11 @@ app.directive 'entryArchive', ->
         replace: true
         templateUrl: 'templates/entry-archive.html'
         controller: [
-            'route'
+            'router'
             '$scope'
-            (route, $scope) ->
+            (router, $scope) ->
                 $scope.select = (entry) ->
                     $scope.$emit 'entrySelected', {entry}
-                #$scope.select(route.getRoutedEntry())
         ]
     }
 
