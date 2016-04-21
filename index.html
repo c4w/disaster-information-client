@@ -7,39 +7,31 @@
     <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./src/style.css">
   </head>
-  <body ng-cloak>
-    <div class="container" ng-controller="mainCtrl">
+
+  <body>
+    <div class="container" ng-controller="mainCtrl" ng-cloak>
 
       <header class="header">
-          <nav>
-            <h2 class="hide" translate="CONSOLE"></h2>
-            <language-switch></language-switch>
-          </nav>
+        <language-switch></language-switch>
 
+        <div class="site-meta">
           <h1><a class="site-title" href="#" translate="TITLE"></a></h1>
+          <p translate="DESCRIPTION"></p>
+        </div><!--.site-meta-->
 
-
-          <nav ng-if="!entry">
-            <div class="site-meta">
-              <p translate="DESCRIPTION"></p>
-            </div><!--.site-meta-->
-
-            <h2 class="hide" translate="ARCHIVES"></h2>
-            <entry-archive></entry-archive>
-          </nav>
+        <nav ng-if="!entry">
+          <h2 class="hide" translate="ARCHIVES"></h2>
+          <entry-archive></entry-archive>
+        </nav>
 
       </header>
 
       <main>
-
         <div class="alert alert-danger alert-window" role="alert" ng-if="err" translate="MESSAGES.ERROR"></div>
-
         <single-entry></single-entry>
-
       </main>
 
     </div><!--.container-->
-
 
     <script src="./bower_components/angular/angular.min.js"></script>
     <script src="./bower_components/angular-translate/angular-translate.min.js"></script>

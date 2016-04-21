@@ -1,21 +1,24 @@
-<form class="language-switch text-right" ng-cloak>
-  <h3 class="hide" translate="LANGUAGE"></h3>
-  <div class="form-group">
-    <input
-      type="radio"
-      name="language"
-      ng-model="key"
-      ng-change="changeLanguage(key)"
-      value="ja"
-      id="language-ja">
-    <label class="control-label" for="language-ja" accesskey="j">日本語</label>
-    <input
-      type="radio"
-      name="language"
-      ng-model="key"
-      ng-change="changeLanguage(key)"
-      value ="en"
-      id="language-en">
-    <label class="control-label" for="language-en" accesskey="e">English</label>
-  </div><!--.formg-roup-->
-</form>
+<nav>
+  <h2 class="hide" translate="CONSOLE"></h2>
+  <form class="language-switch text-right">
+    <h3 class="hide" translate="LANGUAGE"></h3>
+    <div class="form-group">
+      <input
+        type="radio"
+        name="language"
+        ng-model="key"
+        ng-change="changeLanguage(key)"
+        value="ja"
+        id="language-ja">
+      <label class="control-label" for="language-ja" accesskey="j">日本語</label>
+      <input
+        type="radio"
+        name="language"
+        ng-model="key"
+        ng-change="changeLanguage(key)"
+        value ="en"
+        id="language-en">
+      <label class="control-label" for="language-en" accesskey="e">English</label>
+    </div><!--.formg-roup-->
+  </form>
+</nav>

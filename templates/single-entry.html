@@ -1,6 +1,6 @@
 <article id="/2016/04/18/example3.html" class="single-entry" ng-hide="err || !entry">
   <a href="#" translate="RETURN" ng-click="unselect()"></a>
-  <h2 ng-attr-id="{{entry.url}}" class="entry-title" ng-bind="entry.title"></h2>
+  <h2 class="entry-title" ng-bind="entry.title"></h2><!--removed ng-attr-id="{{entry.url}}" -->
     <div class="row">
     <div class="col-xs-12 col-sm-3">
       <div class="entry-meta">
@@ -19,6 +19,10 @@
           <li>
             <h3 class="entry-meta-head" translate="LANGUAGE"></h3>
             <span ng-bind="entry.lang"></span>
+          </li>
+          <li>
+            <h3 class="entry-meta-head meta" translate="META"></h3>
+            <span class="entry-user-meta" ng-bind="entry.meta"></span>
           </li>
         </ul>
       </div><!--.entry-meta-->

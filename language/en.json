@@ -8,6 +8,7 @@
   "LANGUAGE": "language",
   "POSTED_CONTENT": "posted content",
   "RETURN": "return",
+  "META": "meta information",
   "MESSAGES": {
       "ERROR": "An error may happens."
   }

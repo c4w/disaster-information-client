@@ -1,6 +1,8 @@
+$line-height-base: 1.428571429; // line-height-base@Bootstrap = 20/14
+
 // this prevent to render not-equivalent-elements
-[ng-cloak] {
-    display: none !important;
+[ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
 }
 
 a.site-title {
@@ -16,7 +18,7 @@ a.site-title {
 }
 
 .entry-content {
-    padding: 0 1em 1em;
+    padding: 0 1em .3em;
     border-top: 1px dashed #666;
     &:last-child {
         border-bottom: 1px dashed #666;
@@ -42,6 +44,17 @@ a.site-title {
     display: inline;
 }
 
+.entry-meta-head.meta {
+    display: block;
+    line-height: $line-height-base; // line-height-base@Bootstrap = 20/14
+    margin: 0 auto;
+}
+
+.entry-user-meta {
+    line-height: $line-height-base; // line-height-base@Bootstrap = 20/14
+    margin: 0 auto;
+}
+
 .entry-tags {
     display:inline;
     li {
@@ -56,18 +69,28 @@ a.site-title {
 }
 
 
+
+.entry-meta-excerpt {
+    margin-top: .5em;
+    margin-bottom: 0;
+}
+
 .entry-title-excerpt {
+    font-weight: bold;
+    margin-top: .2em;
+    margin-bottom: .2em;
     font-size: 1em;
 }
 
 .entry-body-excerpt {
+    margin-top: .2em;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow-x: hidden;
 }
 
 .single-entry {
-    margin: 2em;
+    margin: 1em;
     padding: 1em;
     border: 1px solid black;
 }

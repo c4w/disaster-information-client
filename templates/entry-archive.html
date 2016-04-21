@@ -1,9 +1,12 @@
-<article class="entry-content"  ng-repeat="entry in entriesShim" ng-hide="err" ng-cloak>
+<article class="entry-content" ng-repeat="entry in entriesShim" ng-hide="err" ng-cloak>
   <header class="entry-header">
     <div class="entry-meta">
+      <p class="entry-meta-excerpt">
+        <span ng-bind="entry.date"></span>
+        <span ng-bind="entry.time"></span>
+      </p>
       <h2 class="entry-title-excerpt">
         <a ng-href="#{{entry.url}}" ng-bind="entry.title" ng-click="select(entry)"></a>
-        <span class="entry-meta-excerpt" ng-bind="entry.date"></span>
       </h2>
     </div><!--.entry-meta-->
     <div class="entry-body-excerpt" ng-bind-html="detag(entry.body)"></div>

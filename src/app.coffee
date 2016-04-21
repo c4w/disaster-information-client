@@ -54,6 +54,7 @@ app.run [
                         return date b - date a
                     .forEach (obj) ->
                         obj.forEach (entry) ->
+                            entry.meta = JSON.stringify entry.meta
                             $rootScope.entries.push entry
 
             .then ->
@@ -61,7 +62,6 @@ app.run [
 
             .catch (res) ->
                 console.log res
-                $rootScope.$emit 'entriesLoaded', {status:'failed'}
                 $rootScope.err = true
 
 ]
@@ -140,7 +140,10 @@ app.service 'router', [
 app.controller 'mainCtrl', [
     '$scope'
     ($scope) ->
-        true
+        $scope.entry = false
+        $scope.$on 'entryUnselected', (event) ->
+            $scope.entry = false
+
 ]
 
 
@@ -173,7 +176,6 @@ app.directive 'singleEntry', ->
             '$rootScope'
             ($scope, $rootScope) ->
                 $scope.unselect = ->
-                    $scope.entry = undefined
                 $rootScope.$on 'entrySelected', (event, {entry}) ->
                     $scope.entry = entry
                 $rootScope.$on 'entryUnselected', (event) ->
@@ -199,6 +201,8 @@ app.directive 'languageSwitch', ->
                     $rootScope.selectedLocale = key
                     $rootScope.entriesShim = $rootScope.entries.filter (entry) ->
                         entry.lang is key
+
+                $scope.key = DEFAULT_LANG
 
                 $rootScope.$on 'entriesLoaded', ->
                     $scope.key = $rootScope.selectedLocale
