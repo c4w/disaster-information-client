@@ -12,9 +12,11 @@ http://c4w.github.io/disaster-information-client
 災害情報として掲載されている情報は全てダミーです。
 
 ## contribution
-''''
+
 git clone
+
 npm install
+
 bower install
+
 gulp
-''''
