@@ -31,7 +31,7 @@
 
       <main>
 
-        <div class="alert alert-danger alert-window" role="alert" ng-hide="!err" translate="MESSAGES.ERROR"></div>
+        <div class="alert alert-danger alert-window" role="alert" ng-if="err" translate="MESSAGES.ERROR"></div>
 
         <single-entry></single-entry>
 

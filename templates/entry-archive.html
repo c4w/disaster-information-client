@@ -6,6 +6,6 @@
         <span class="entry-meta-excerpt" ng-bind="entry.date"></span>
       </h2>
     </div><!--.entry-meta-->
-    <div class="entry-body-excerpt" ng-bind="entry.body"></div>
+    <div class="entry-body-excerpt" ng-bind-html="detag(entry.body)"></div>
   </header>
 </article>

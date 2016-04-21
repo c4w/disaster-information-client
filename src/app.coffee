@@ -8,7 +8,7 @@ LANGUAGE_LABELS =
 
 app = angular.module 'disaster-information-client', [
     'pascalprecht.translate'
-    #'ngSanitize'
+    'ngSanitize'
 ]
 
 
@@ -153,6 +153,8 @@ app.directive 'entryArchive', ->
             'router'
             '$scope'
             (router, $scope) ->
+                $scope.detag = (html) ->
+                        if html? then String(html).replace(/<[^>]+>/gm, '') else ''
                 $scope.select = (entry) ->
                     $scope.$emit 'entrySelected', {entry}
         ]
