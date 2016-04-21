@@ -25,29 +25,40 @@ app.run [
     'acquireLocales'
     'acquireEntries'
     '$rootScope'
-    (acquireLocales,acquireEntries, $rootScope) ->
+    (acquireLocales, acquireEntries, $rootScope) ->
         # setting
         $rootScope.languageLabel = {
             ja: '日本語'
             en: 'English'
         }
+        $rootScope.err = false
 
-        acquireLocales().then((locales) ->
-
-            $rootScope.locales = locales
-            $rootScope.selectedLocale = locales[0]
-
-            acquireEntries(locales[0]).then((entries) ->
+        acquireLocales()
+            .then (locales) ->
+                $rootScope.locales = locales
+                $rootScope.selectedLocale = locales[0]
                 $rootScope.entries = []
-                for entry in entries
-                    $rootScope.entries.push entry
+                return locales
+
+            .then (locales) ->
+                acquireEntries(locales)
+
+            .then (entries) ->
+                $rootScope.entries = []
+                # sort and flatten
+                desc = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
+                entries
+                    .sort desc
+                    .forEach (obj)->
+                        obj.forEach (entry) ->
+                            $rootScope.entries.push entry
+
+            .then ->
                 $rootScope.$emit 'entriesLoaded'
-            ).catch (res) -> # when acquireEntries failed
-                $rootScope.err = true
 
-        ).catch (res) -> # when acquireLocales failed
+            .catch (res) ->
+                console.log res
                 $rootScope.err = true
-
 
 ]
 
@@ -74,25 +85,25 @@ app.service 'acquireEntries', [
     '$http'
     '$q'
     ($http, $q) ->
-        deferred = $q.defer() # make defer instance
-        return (locale) ->
-            $http.get getEndpoint locale
-                .then (res) ->
-                    entries = res.data.entries
-                    desc = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
-                    entries
-                        .sort desc
-                        .forEach (entry) ->
-                            rawDate = Date.parse(entry.date);
-                            entry.date = new Date(rawDate).toLocaleDateString()
-                            entry.time = new Date(rawDate).toLocaleTimeString()
-                            entry.body = entry.body # need sanitization?
-                            entry.locale = locale
-                    deferred.resolve entries
-                    return deferred.promise
-                , (res) ->
-                    deferred.reject res
-                    return deferred.promise
+        return (locales) ->
+            $q.all locales.map (locale) ->
+                deferred = $q.defer()
+                $http.get getEndpoint locale
+                    .then (res) ->
+                        entries = res.data.entries
+                        entries
+                            .forEach (entry) ->
+                                rawDate = Date.parse(entry.date);
+                                entry.date = new Date(rawDate).toLocaleDateString()
+                                entry.time = new Date(rawDate).toLocaleTimeString()
+                                entry.body = entry.body # need sanitization?
+                                entry.locale = locale
+                        deferred.resolve entries
+                        return deferred.promise
+
+                    , (res) ->
+                        deferred.reject res
+                        return deferred.promise
 ]
 
 
@@ -106,14 +117,14 @@ app.service 'route', [
             true
 
 
-        return {
-            getRoutedEntry: ->
-                result = false
-                $rootScope.locales.forEach (locale) ->
-                    $rootScope.entries[locale].forEach (entry) ->
-                        if entry.url is $location.path() then result = entry
-                return result
-        }
+        # return {
+        #     getRoutedEntry: ->
+        #         result = false
+        #         $rootScope.locales.forEach (locale) ->
+        #             $rootScope.entries[locale].forEach (entry) ->
+        #                 if entry.url is $location.path() then result = entry
+        #         return result
+        # }
 ]
 
 
@@ -129,7 +140,7 @@ app.directive 'entryArchive', ->
             (route, $scope) ->
                 $scope.select = (entry) ->
                     $scope.$emit 'entrySelected', {entry}
-                $scope.select(route.getRoutedEntry())
+                #$scope.select(route.getRoutedEntry())
         ]
     }
 
@@ -161,11 +172,17 @@ app.directive 'languageSwitch', ->
             '$rootScope'
             '$translate'
             ($scope, $rootScope, $translate) ->
-                $scope.key = $rootScope.selectedLocale
-                $scope.changeLanguage = (key) ->
+
+                changeLanguage = (key) ->
                     $translate.use(key)
                     $rootScope.selectedLocale = key
                     $rootScope.entriesShim = $rootScope.entries.filter (entry) ->
                         entry.locale = key
+
+                $rootScope.$on 'entriesLoaded', ->
+                    $scope.key = $rootScope.selectedLocale
+                    changeLanguage $scope.key
+
+                $scope.changeLanguage = changeLanguage
         ]
     }

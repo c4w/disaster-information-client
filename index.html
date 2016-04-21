@@ -16,7 +16,7 @@
     <div class="container">
 
       <header class="header">
-        
+
           <h2 class="hide" translate="CONSOLE"></h2>
           <language-switch></language-switch>
 
@@ -30,7 +30,7 @@
 
       <main>
 
-        <div class="alert alert-danger" role="alert" ng-show="err" translate="MESSAGES.ERROR"></div>
+        <div class="alert alert-danger" role="alert" ng-hide="!err" translate="MESSAGES.ERROR"></div>
 
         <single-entry></single-entry>
 
