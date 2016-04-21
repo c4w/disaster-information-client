@@ -5,7 +5,6 @@ sass       = require 'gulp-sass'
 notify     = require 'gulp-notify'
 sourcemaps = require 'gulp-sourcemaps'
 webserver  = require 'gulp-webserver'
-exec       = require 'gulp-exec'
 _          = require 'underscore'
 
 class FileIOs

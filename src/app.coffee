@@ -127,7 +127,9 @@ app.service 'router', [
             $rootScope.$watch ->
                 $location.path()
             , (url) ->
-                if url isnt ''
+                if url is ''
+                    $rootScope.$emit 'entryUnselected'
+                else
                     entry = ($rootScope.entries.filter (entry) ->
                         entry.url is url
                     )[0]
@@ -161,8 +163,12 @@ app.directive 'singleEntry', ->
             '$scope'
             '$rootScope'
             ($scope, $rootScope) ->
+                $scope.unselect = ->
+                    $scope.entry = undefined
                 $rootScope.$on 'entrySelected', (event, {entry}) ->
                     $scope.entry = entry
+                $rootScope.$on 'entryUnselected', (event) ->
+                    $scope.entry = undefined
         ]
     }
 

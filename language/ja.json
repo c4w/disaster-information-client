@@ -6,6 +6,7 @@
   "POSTED_ON": "投稿日時",
   "TAGS": "タグ",
   "LANGUAGE": "言語",
+  "UNSELECT": "選択解除",
   "POSTED_CONTENT": "投稿内容",
   "MESSAGES": {
       "ERROR": "なんらかのエラーです"
