@@ -1,5 +1,11 @@
-endpointBase = "http://api.c4w.jp/api/v1/"
-getEndpoint = (key) -> "#{endpointBase}#{key}.json"
+ENDPOINT_BASE = "http://api.c4w.jp/api/v1/"
+DEFAULT_LANG = 'ja'
+FALLBACK_LANG = 'en'
+LANGUAGE_LABELS =
+    ja: '日本語'
+    en: 'English'
+
+getEndpoint = (key) -> "#{ENDPOINT_BASE}#{key}.json"
 
 app = angular.module 'disaster-information-client', [
     'pascalprecht.translate'
@@ -16,8 +22,8 @@ app.config [
             suffix: '.json'
         }
         $translateProvider.useSanitizeValueStrategy null
-        $translateProvider.preferredLanguage 'ja'
-        $translateProvider.fallbackLanguage 'ja'
+        $translateProvider.preferredLanguage DEFAULT_LANG
+        $translateProvider.fallbackLanguage FALLBACK_LANG
 ]
 
 
@@ -27,16 +33,13 @@ app.run [
     '$rootScope'
     (acquireLocales, acquireEntries, $rootScope) ->
         # setting
-        $rootScope.languageLabel = {
-            ja: '日本語'
-            en: 'English'
-        }
+        $rootScope.languageLabel = LANGUAGE_LABELS
         $rootScope.err = false
 
         acquireLocales()
             .then (locales) ->
                 $rootScope.locales = locales
-                $rootScope.selectedLocale = locales[0]
+                $rootScope.selectedLocale = DEFAULT_LANG
                 $rootScope.entries = []
                 return locales
 
@@ -45,11 +48,14 @@ app.run [
 
             .then (entries) ->
                 $rootScope.entries = []
+                console.log entries
                 # sort and flatten
-                desc = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
                 entries
-                    .sort desc
-                    .forEach (obj)->
+                    .sort (a, b) ->
+                        date = (x) ->
+                            Date.parse x.date
+                        return date b - date a
+                    .forEach (obj) ->
                         obj.forEach (entry) ->
                             $rootScope.entries.push entry
 
@@ -97,7 +103,6 @@ app.service 'acquireEntries', [
                                 entry.date = new Date(rawDate).toLocaleDateString()
                                 entry.time = new Date(rawDate).toLocaleTimeString()
                                 entry.body = entry.body # need sanitization?
-                                entry.locale = locale
                         deferred.resolve entries
                         return deferred.promise
 
@@ -168,16 +173,16 @@ app.directive 'languageSwitch', ->
         replace: true
         templateUrl: 'templates/language-switch.html'
         controller: [
+            '$translate'
             '$scope'
             '$rootScope'
-            '$translate'
-            ($scope, $rootScope, $translate) ->
+            ($translate, $scope, $rootScope) ->
 
                 changeLanguage = (key) ->
                     $translate.use(key)
                     $rootScope.selectedLocale = key
                     $rootScope.entriesShim = $rootScope.entries.filter (entry) ->
-                        entry.locale = key
+                        entry.lang is key
 
                 $rootScope.$on 'entriesLoaded', ->
                     $scope.key = $rootScope.selectedLocale
