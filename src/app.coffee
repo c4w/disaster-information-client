@@ -8,14 +8,13 @@ LANGUAGE_LABELS =
 
 app = angular.module 'disaster-information-client', [
     'pascalprecht.translate'
-    'ngSanitize'
+    #'ngSanitize'
 ]
 
 
 app.config [
     '$translateProvider'
     ($translateProvider) ->
-
         $translateProvider.useStaticFilesLoader {
             prefix: 'language/'
             suffix: '.json'
@@ -134,6 +133,13 @@ app.service 'router', [
                         entry.url is url
                     )[0]
                     $rootScope.$emit 'entrySelected', {entry}
+]
+
+
+app.controller 'mainCtrl', [
+    '$scope'
+    ($scope) ->
+        true
 ]
 
 

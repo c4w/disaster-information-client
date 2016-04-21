@@ -4,38 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title translate="TITLE"></title>
-    <script src="./bower_components/angular/angular.min.js"></script>
-    <script src="./bower_components/angular-translate/angular-translate.min.js"></script>
-    <script src="./bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
-    <script src="./bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-    <script src="./src/app.js"></script>
     <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./src/style.css">
   </head>
   <body>
-    <div class="container">
+    <div class="container" ng-controller="mainCtrl">
 
       <header class="header">
 
-          <h2 class="hide" translate="CONSOLE"></h2>
-          <language-switch></language-switch>
+          <nav>
+            <h2 class="hide" translate="CONSOLE"></h2>
+            <language-switch></language-switch>
+          </nav>
 
-          <h1 translate="TITLE"></h1>
-          <p translate="DESCRIPTION"></p>
+          <nav ng-if="!entry">
+            <div class="site-meta">
+              <h1 translate="TITLE"></h1>
+              <p translate="DESCRIPTION"></p>
+            </div><!--.site-meta-->
 
-          <h2 class="hide" translate="ARCHIVES"></h2>
-          <entry-archive></entry-archive>
+            <h2 class="hide" translate="ARCHIVES"></h2>
+            <entry-archive></entry-archive>
+          </nav>
 
       </header>
 
       <main>
 
-        <div class="alert alert-danger" role="alert" ng-hide="!err" translate="MESSAGES.ERROR"></div>
+        <div class="alert alert-danger alert-window" role="alert" ng-hide="!err" translate="MESSAGES.ERROR"></div>
 
         <single-entry></single-entry>
 
       </main>
 
     </div><!--.container-->
+
+
+    <script src="./bower_components/angular/angular.min.js"></script>
+    <script src="./bower_components/angular-translate/angular-translate.min.js"></script>
+    <script src="./bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+    <script src="./bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="./src/app.js"></script>
   </body>
 </html>

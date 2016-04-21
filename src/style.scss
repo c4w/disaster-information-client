@@ -1,4 +1,4 @@
-.header {
+.site-meta {
     margin-top: .5em;
     border-bottom: 1px solid #666;
 }
@@ -52,4 +52,14 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow-x: hidden;
+}
+
+.single-entry {
+    margin: 3em;
+    padding: 1em;
+    border: 1px solid black;
+}
+
+.alert-window {
+    margin: 1em;
 }

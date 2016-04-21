@@ -7,7 +7,7 @@
   "TAGS": "tag(s)",
   "LANGUAGE": "language",
   "POSTED_CONTENT": "posted content",
-  "UNSELECT": "unselect",
+  "RETURN": "return",
   "MESSAGES": {
       "ERROR": "An error may happens."
   }
