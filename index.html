@@ -7,19 +7,20 @@
     <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./src/style.css">
   </head>
-  <body>
+  <body ng-cloak>
     <div class="container" ng-controller="mainCtrl">
 
       <header class="header">
-
           <nav>
             <h2 class="hide" translate="CONSOLE"></h2>
             <language-switch></language-switch>
           </nav>
 
+          <h1><a class="site-title" href="#" translate="TITLE"></a></h1>
+
+
           <nav ng-if="!entry">
             <div class="site-meta">
-              <h1 translate="TITLE"></h1>
               <p translate="DESCRIPTION"></p>
             </div><!--.site-meta-->
 

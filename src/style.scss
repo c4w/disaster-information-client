@@ -1,13 +1,25 @@
+// this prevent to render not-equivalent-elements
+[ng-cloak] {
+    display: none !important;
+}
+
+a.site-title {
+    color: inherit;
+    &:hover {
+        text-decoration: none;
+        opacity: .6;
+    }
+}
+
 .site-meta {
-    margin-top: .5em;
-    border-bottom: 1px solid #666;
+    margin-top: 1em;
 }
 
 .entry-content {
     padding: 0 1em 1em;
-    border-bottom: 1px dashed #666;
+    border-top: 1px dashed #666;
     &:last-child {
-        border-bottom: none;
+        border-bottom: 1px dashed #666;
     }
 }
 
@@ -55,11 +67,15 @@
 }
 
 .single-entry {
-    margin: 3em;
+    margin: 2em;
     padding: 1em;
     border: 1px solid black;
 }
 
 .alert-window {
     margin: 1em;
+}
+
+.language-switch {
+    margin-top: .5em;
 }

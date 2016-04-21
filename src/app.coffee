@@ -57,10 +57,11 @@ app.run [
                             $rootScope.entries.push entry
 
             .then ->
-                $rootScope.$emit 'entriesLoaded'
+                $rootScope.$emit 'entriesLoaded', {status:'success'}
 
             .catch (res) ->
                 console.log res
+                $rootScope.$emit 'entriesLoaded', {status:'failed'}
                 $rootScope.err = true
 
 ]
