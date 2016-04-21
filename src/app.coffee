@@ -1,9 +1,10 @@
-getEndpoint = (key) -> "http://api.c4w.jp/api/v1/#{key}.json"
+endpointBase = "http://api.c4w.jp/api/v1/"
 
 app = angular.module 'disaster-information-client', [
     'pascalprecht.translate'
-    'ngSanitize'
+    #'ngSanitize'
 ]
+
 
 app.config [
     '$translateProvider'
@@ -13,15 +14,17 @@ app.config [
             prefix: 'language/'
             suffix: '.json'
         }
-        #$translateProvider.useSanitizeValueStrategy null
+        $translateProvider.useSanitizeValueStrategy null
         $translateProvider.preferredLanguage 'ja'
         $translateProvider.fallbackLanguage 'ja'
 ]
+
 
 app.run [
     '$http'
     '$rootScope'
     ($http, $rootScope) ->
+        getEndpoint = (key) -> "#{endpointBase}#{key}.json"
         # method = 'GET'
         # url = getEndpoint('locale')
         # $http { method, url }
@@ -29,9 +32,7 @@ app.run [
         #         locales = res.data
         #
         #         $rootScope.locales = locales
-
-        # ロケール一覧を取得してくる仕組みは未実装
-        locales = ['ja', 'en']
+        locales = ['ja', 'en'] # [mocks] locale should be obtained by ajax
         $rootScope.locales = locales
         $rootScope.selectedLocale = locales[0]
 
@@ -40,25 +41,58 @@ app.run [
             en: 'English'
         }
 
-        $rootScope.entries = {}
+        $rootScope.entries = []
+
+        promises = []
+
         locales.forEach (locale) ->
-            $http { Method: 'GET', url: getEndpoint locale }
-                .then ({data}) ->
 
-                    desc = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
-                    data.entries
-                        .sort desc
-                        .forEach (entry) ->
-                            rawDate = Date.parse(entry.date);
-                            entry.date = new Date(rawDate).toLocaleDateString()
-                            entry.time = new Date(rawDate).toLocaleTimeString()
-                            entry.body = entry.body # need sanitization?
-                    $rootScope.entries[locale] = data.entries
-                    # .shim always refer selected locale
-                    if locale is $rootScope.selectedLocale
-                        $rootScope.entries.shim = $rootScope.entries[locale]
+            promises.push ->
+                $http { Method: 'GET', url: getEndpoint locale } #[bugs] need to do this with Promise.all and emit 'loaded' event
+                    .then ({data}) ->
 
+                        desc = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
+                        data.entries
+                            .sort desc
+                            .forEach (entry) ->
+                                rawDate = Date.parse(entry.date);
+                                entry.date = new Date(rawDate).toLocaleDateString()
+                                entry.time = new Date(rawDate).toLocaleTimeString()
+                                entry.body = entry.body # need sanitization?
+                                entry.locale = locale
+                                $rootScope.entries.push data.entries
+                        # .shim always refer selected locale
+                        if locale is $rootScope.selectedLocale
+                            $rootScope.entries.shim = $rootScope.entries.filter (entry) ->
+                                entry.locale = locale
+
+        Promise.all promises
+            .then ->
+                $rootScope.
 ]
+
+
+app.service 'route', [
+    '$location'
+    '$rootScope'
+    ($location, $rootScope) ->
+        $rootScope.$watch ->
+            $location.path()
+        , (aa) ->
+            alert $location.path()
+            alert aa
+
+
+        return {
+            getRoutedEntry: ->
+                result = false
+                $rootScope.locales.forEach (locale) ->
+                    $rootScope.entries[locale].forEach (entry) ->
+                        if entry.url is $location.path() then result = entry
+                return result
+        }
+]
+
 
 app.directive 'entryArchive', ->
     return {
@@ -67,12 +101,15 @@ app.directive 'entryArchive', ->
         replace: true
         templateUrl: 'templates/entry-archive.html'
         controller: [
+            'route'
             '$scope'
-            ($scope) ->
-                $scope.selectEntry = (entry) ->
+            (route, $scope) ->
+                $scope.select = (entry) ->
                     $scope.$emit 'entrySelected', {entry}
+                $scope.select(route.getRoutedEntry())
         ]
     }
+
 
 app.directive 'singleEntry', ->
     return {
@@ -105,6 +142,7 @@ app.directive 'languageSwitch', ->
                 $scope.changeLanguage = (key) ->
                     $translate.use(key)
                     $rootScope.selectedLocale = key
-                    $rootScope.entries.shim = $rootScope.entries[key]
+                    $rootScope.entries.shim = $rootScope.entries.filter (entry) ->
+                        entry.locale = key
         ]
     }
