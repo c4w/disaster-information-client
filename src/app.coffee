@@ -26,66 +26,74 @@ app.run [
     'acquireEntries'
     '$rootScope'
     (acquireLocales,acquireEntries, $rootScope) ->
-        promise = acquireLocales()
-        promise.then (data) ->
-            console.log acquireEntries
-        # $rootScope.err = false
-        #
-        # deferred = $q.defer()
-        #
-        #
-        #
-        #
-        # Promise.resolve()
-        #     .then (locales)->
-        #         Promise.all locales.map (locale) ->
-        #             new Promise (fulfilled, rejected) ->
-        #                 $http.get(getEndpoint locale)
-        #                     .then (res) ->
-        #                         desc = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
-        #                         data.entries
-        #                             .sort desc
-        #                             .forEach (entry) ->
-        #                                 rawDate = Date.parse(entry.date);
-        #                                 entry.date = new Date(rawDate).toLocaleDateString()
-        #                                 entry.time = new Date(rawDate).toLocaleTimeString()
-        #                                 entry.body = entry.body # need sanitization?
-        #                                 entry.locale = locale
-        #                                 $rootScope.entries.push data.entries
-        #                         # .shim always refer selected locale
-        #                         if locale is $rootScope.selectedLocale
-        #                             $rootScope.entries.shim = $rootScope.entries.filter (entry) ->
-        #                                 entry.locale = locale
-        #                         fulfilled()
-        #
+        # setting
+        $rootScope.languageLabel = {
+            ja: '日本語'
+            en: 'English'
+        }
+
+        acquireLocales().then((locales) ->
+
+            $rootScope.locales = locales
+            $rootScope.selectedLocale = locales[0]
+
+            acquireEntries(locales[0]).then((entries) ->
+                $rootScope.entries = []
+                for entry in entries
+                    $rootScope.entries.push entry
+                $rootScope.$emit 'entriesLoaded'
+            ).catch (res) -> # when acquireEntries failed
+                $rootScope.err = true
+
+        ).catch (res) -> # when acquireLocales failed
+                $rootScope.err = true
+
+
 ]
+
 
 app.service 'acquireLocales', [
     '$http'
     '$q'
-    '$rootScope'
-    ($http, $q, $rootScope) ->
+    ($http, $q) ->
         deferred = $q.defer() # make defer instance
         return ->
             $http.get getEndpoint 'locale'
                 .then (res) ->
                     # initialization
                     locales = res.data
-                    $rootScope.locales = locales
-                    $rootScope.selectedLocale = locales[0]
-                    $rootScope.languageLabel = {
-                        ja: '日本語'
-                        en: 'English'
-                    }
-                    $rootScope.entries = []
                     deferred.resolve locales
                     return deferred.promise
                 , (res) ->
-                    $rootScope.err = true
                     deferred.reject res
                     return deferred.promise
 ]
 
+
+app.service 'acquireEntries', [
+    '$http'
+    '$q'
+    ($http, $q) ->
+        deferred = $q.defer() # make defer instance
+        return (locale) ->
+            $http.get getEndpoint locale
+                .then (res) ->
+                    entries = res.data.entries
+                    desc = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
+                    entries
+                        .sort desc
+                        .forEach (entry) ->
+                            rawDate = Date.parse(entry.date);
+                            entry.date = new Date(rawDate).toLocaleDateString()
+                            entry.time = new Date(rawDate).toLocaleTimeString()
+                            entry.body = entry.body # need sanitization?
+                            entry.locale = locale
+                    deferred.resolve entries
+                    return deferred.promise
+                , (res) ->
+                    deferred.reject res
+                    return deferred.promise
+]
 
 
 app.service 'route', [
@@ -95,8 +103,7 @@ app.service 'route', [
         $rootScope.$watch ->
             $location.path()
         , (aa) ->
-            console.log $location.path()
-            console.log aa
+            true
 
 
         return {
@@ -158,7 +165,7 @@ app.directive 'languageSwitch', ->
                 $scope.changeLanguage = (key) ->
                     $translate.use(key)
                     $rootScope.selectedLocale = key
-                    $rootScope.entries.shim = $rootScope.entries.filter (entry) ->
+                    $rootScope.entriesShim = $rootScope.entries.filter (entry) ->
                         entry.locale = key
         ]
     }
