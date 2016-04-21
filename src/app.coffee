@@ -1,11 +1,10 @@
 ENDPOINT_BASE = "http://api.c4w.jp/api/v1/"
+RESPONSE_FORMAT = 'json'
 DEFAULT_LANG = 'ja'
 FALLBACK_LANG = 'en'
 LANGUAGE_LABELS =
     ja: '日本語'
     en: 'English'
-
-getEndpoint = (key) -> "#{ENDPOINT_BASE}#{key}.json"
 
 app = angular.module 'disaster-information-client', [
     'pascalprecht.translate'
@@ -48,7 +47,6 @@ app.run [
 
             .then (entries) ->
                 $rootScope.entries = []
-                console.log entries
                 # sort and flatten
                 entries
                     .sort (a, b) ->
@@ -69,10 +67,18 @@ app.run [
 ]
 
 
+app.service 'getEndpoint', [
+    ->
+        (key)->
+            "#{ENDPOINT_BASE}#{key}.#{RESPONSE_FORMAT}"
+]
+
+
 app.service 'acquireLocales', [
+    'getEndpoint'
     '$http'
     '$q'
-    ($http, $q) ->
+    (getEndpoint, $http, $q) ->
         deferred = $q.defer() # make defer instance
         return ->
             $http.get getEndpoint 'locale'
@@ -88,9 +94,10 @@ app.service 'acquireLocales', [
 
 
 app.service 'acquireEntries', [
+    'getEndpoint'
     '$http'
     '$q'
-    ($http, $q) ->
+    (getEndpoint, $http, $q) ->
         return (locales) ->
             $q.all locales.map (locale) ->
                 deferred = $q.defer()
