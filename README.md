@@ -10,3 +10,11 @@ http://c4w.github.io/disaster-information-client
 このサイトは、災害情報を配信するための実験的なプロジェクトの一環として作成したものです。詳細は、[c4w/GitHubページを使った災害情報配信用のJSON API@Github](https://github.com/c4w/disaster-information)をご覧ください。
 これはテストサイトです。
 災害情報として掲載されている情報は全てダミーです。
+
+## contribution
+''''
+git clone
+npm install
+bower install
+gulp
+''''
