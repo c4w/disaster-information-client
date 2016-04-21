@@ -5,9 +5,10 @@ sass       = require 'gulp-sass'
 notify     = require 'gulp-notify'
 sourcemaps = require 'gulp-sourcemaps'
 webserver  = require 'gulp-webserver'
+exec       = require 'gulp-exec'
 _          = require 'underscore'
 
-class IOs
+class FileIOs
     constructor: (data) ->
         unless data instanceof Array
             throw new Error 'constructor reqire Array.'
@@ -34,7 +35,7 @@ class IOs
         [@src(name), @dest(name)]
 
 
-ios = new IOs [
+fileIOs = new FileIOs [
     {
         name: 'app'
         src: ['./src/**/*.coffee']
@@ -53,6 +54,8 @@ ios = new IOs [
     }
 ]
 
+{host, port} = {host:'localhost', port:8000}
+
 coffeePipeline = (src, dest) ->
     ->
         gulp.src src
@@ -62,23 +65,27 @@ coffeePipeline = (src, dest) ->
             .pipe sourcemaps.write()
             .pipe gulp.dest dest
 
-gulp.task 'coffee-app', coffeePipeline.apply(null, ios.of 'app')
+gulp.task 'coffee-app', coffeePipeline.apply(null, fileIOs.of 'app')
 
-gulp.task 'coffee-spec', coffeePipeline.apply(null, ios.of 'spec')
+gulp.task 'coffee-spec', coffeePipeline.apply(null, fileIOs.of 'spec')
 
 gulp.task 'sass', ->
-    gulp.src(ios.src 'sass')
+    gulp.src(fileIOs.src 'sass')
         .pipe plumber(errorHandler: notify.onError '<%= error.message %>')
         .pipe sass()
-        .pipe gulp.dest(ios.dest 'sass')
+        .pipe gulp.dest(fileIOs.dest 'sass')
 
 gulp.task 'build', ['coffee-app','coffee-spec', 'sass']
 
 gulp.task 'webserver', ->
     gulp.src('./')
-        .pipe webserver {livereload: true}
+        .pipe webserver {
+            host
+            port
+            livereload: true
+        }
 
 gulp.task 'default', ['build']
 
 gulp.task 'dev', ['build','webserver'], ->
-    gulp.watch ios.src(), ['build']
+    gulp.watch fileIOs.src(), ['build']
