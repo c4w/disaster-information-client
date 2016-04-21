@@ -1,8 +1,9 @@
 endpointBase = "http://api.c4w.jp/api/v1/"
+getEndpoint = (key) -> "#{endpointBase}#{key}.json"
 
 app = angular.module 'disaster-information-client', [
     'pascalprecht.translate'
-    #'ngSanitize'
+    'ngSanitize'
 ]
 
 
@@ -21,55 +22,70 @@ app.config [
 
 
 app.run [
-    '$http'
+    'acquireLocales'
+    'acquireEntries'
     '$rootScope'
-    ($http, $rootScope) ->
-        getEndpoint = (key) -> "#{endpointBase}#{key}.json"
-        # method = 'GET'
-        # url = getEndpoint('locale')
-        # $http { method, url }
-        #     .then (res) ->
-        #         locales = res.data
+    (acquireLocales,acquireEntries, $rootScope) ->
+        promise = acquireLocales()
+        promise.then (data) ->
+            console.log acquireEntries
+        # $rootScope.err = false
         #
-        #         $rootScope.locales = locales
-        locales = ['ja', 'en'] # [mocks] locale should be obtained by ajax
-        $rootScope.locales = locales
-        $rootScope.selectedLocale = locales[0]
-
-        $rootScope.languageLabel = {
-            ja: '日本語'
-            en: 'English'
-        }
-
-        $rootScope.entries = []
-
-        promises = []
-
-        locales.forEach (locale) ->
-
-            promises.push ->
-                $http { Method: 'GET', url: getEndpoint locale } #[bugs] need to do this with Promise.all and emit 'loaded' event
-                    .then ({data}) ->
-
-                        desc = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
-                        data.entries
-                            .sort desc
-                            .forEach (entry) ->
-                                rawDate = Date.parse(entry.date);
-                                entry.date = new Date(rawDate).toLocaleDateString()
-                                entry.time = new Date(rawDate).toLocaleTimeString()
-                                entry.body = entry.body # need sanitization?
-                                entry.locale = locale
-                                $rootScope.entries.push data.entries
-                        # .shim always refer selected locale
-                        if locale is $rootScope.selectedLocale
-                            $rootScope.entries.shim = $rootScope.entries.filter (entry) ->
-                                entry.locale = locale
-
-        Promise.all promises
-            .then ->
-                $rootScope.
+        # deferred = $q.defer()
+        #
+        #
+        #
+        #
+        # Promise.resolve()
+        #     .then (locales)->
+        #         Promise.all locales.map (locale) ->
+        #             new Promise (fulfilled, rejected) ->
+        #                 $http.get(getEndpoint locale)
+        #                     .then (res) ->
+        #                         desc = (a, b) -> Date.parse(b.date) - Date.parse(a.date)
+        #                         data.entries
+        #                             .sort desc
+        #                             .forEach (entry) ->
+        #                                 rawDate = Date.parse(entry.date);
+        #                                 entry.date = new Date(rawDate).toLocaleDateString()
+        #                                 entry.time = new Date(rawDate).toLocaleTimeString()
+        #                                 entry.body = entry.body # need sanitization?
+        #                                 entry.locale = locale
+        #                                 $rootScope.entries.push data.entries
+        #                         # .shim always refer selected locale
+        #                         if locale is $rootScope.selectedLocale
+        #                             $rootScope.entries.shim = $rootScope.entries.filter (entry) ->
+        #                                 entry.locale = locale
+        #                         fulfilled()
+        #
 ]
+
+app.service 'acquireLocales', [
+    '$http'
+    '$q'
+    '$rootScope'
+    ($http, $q, $rootScope) ->
+        deferred = $q.defer() # make defer instance
+        return ->
+            $http.get getEndpoint 'locale'
+                .then (res) ->
+                    # initialization
+                    locales = res.data
+                    $rootScope.locales = locales
+                    $rootScope.selectedLocale = locales[0]
+                    $rootScope.languageLabel = {
+                        ja: '日本語'
+                        en: 'English'
+                    }
+                    $rootScope.entries = []
+                    deferred.resolve locales
+                    return deferred.promise
+                , (res) ->
+                    $rootScope.err = true
+                    deferred.reject res
+                    return deferred.promise
+]
+
 
 
 app.service 'route', [
@@ -79,8 +95,8 @@ app.service 'route', [
         $rootScope.$watch ->
             $location.path()
         , (aa) ->
-            alert $location.path()
-            alert aa
+            console.log $location.path()
+            console.log aa
 
 
         return {
