@@ -1,74 +1,42 @@
+// variables
 $line-height-base: 1.428571429; // line-height-base@Bootstrap = 20/14
 
-// this prevent to render not-equivalent-elements
+// angular-particular settings
+//// this prevent to render not-equivalent-elements
 [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
 
-a.site-title {
-    color: inherit;
-    &:hover {
-        text-decoration: none;
-        opacity: .6;
+
+// site header
+//// language-switch template
+.language-switch {
+    margin-top: .5em;
+}
+
+
+//// site-meta
+.site-meta {
+    margin-top: 1em;
+    a.site-title {
+        color: inherit;
+        &:hover {
+            text-decoration: none;
+            opacity: .6;
+        }
     }
 }
 
-.site-meta {
-    margin-top: 1em;
-}
 
-.entry-content {
+// site main
+//// entry-archive
+.archived-entry-content {
     padding: 0 1em .3em;
     border-top: 1px dashed #666;
     &:last-child {
         border-bottom: 1px dashed #666;
     }
 }
-
-.entry-title {
-    font-size: 1.5em;
-}
-
-.entry-meta-elements, .entry-tags {
-    padding: 0;
-    list-style: none;
-}
-
-.entry-meta-elements li {
-    display: block;
-}
-
-.entry-meta-head {
-    font-weight: bold;
-    font-size:1em;
-    display: inline;
-}
-
-.entry-meta-head.meta {
-    display: block;
-    line-height: $line-height-base; // line-height-base@Bootstrap = 20/14
-    margin: 0 auto;
-}
-
-.entry-user-meta {
-    line-height: $line-height-base; // line-height-base@Bootstrap = 20/14
-    margin: 0 auto;
-}
-
-.entry-tags {
-    display:inline;
-    li {
-        display: inline;
-        &:after {
-            content: ' ';
-        }
-        &:last-child:after {
-            content: none;
-        }
-    }
-}
-
-
 
 .entry-meta-excerpt {
     margin-top: .5em;
@@ -89,16 +57,50 @@ a.site-title {
     overflow-x: hidden;
 }
 
-.single-entry {
+
+//// alert-window
+.alert-window {
+    margin: 1em;
+}
+
+
+//// single-entry
+article.single-entry {
     margin: 1em;
     padding: 1em;
     border: 1px solid black;
 }
 
-.alert-window {
-    margin: 1em;
+.entry-title {
+    font-size: 1.5em;
 }
 
-.language-switch {
-    margin-top: .5em;
+.entry-meta-elements {
+    padding: 0;
+    list-style: none;
+}
+
+.entry-meta-elements li {
+    display: block;
+}
+
+.entry-meta-head {
+    font-weight: bold;
+    font-size:1em;
+    display: inline;
+}
+
+.entry-tags {
+    padding: 0;
+    list-style: none;
+    display:inline;
+    li.entry-tag {
+        display: inline;
+        &:after {
+            content: ' ';
+        }
+        &:last-child:after {
+            content: none;
+        }
+    }
 }

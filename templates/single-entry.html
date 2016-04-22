@@ -1,4 +1,4 @@
-<article id="/2016/04/18/example3.html" class="single-entry" ng-hide="err || !entry">
+<article ng-attr-id="{{entry.url}}" class="single-entry" ng-hide="err || !entry">
   <a href="#" translate="RETURN" ng-click="unselect()"></a>
   <h2 class="entry-title" ng-bind="entry.title"></h2><!--removed ng-attr-id="{{entry.url}}" -->
     <div class="row">
@@ -13,7 +13,9 @@
 
           <li>
             <h3 class="entry-meta-head" translate="TAGS"></h3>
-            <ul class="entry-tags"><li ng-repeat="tag in entry.tags" ng-bind="tag"></li></ul>
+            <ul class="entry-tags">
+              <li class="entry-tag" ng-repeat="tag in entry.tags" ng-bind="tag"></li>
+            </ul>
           </li>
 
           <li>
@@ -21,8 +23,8 @@
             <span ng-bind="entry.lang"></span>
           </li>
           <li>
-            <h3 class="entry-meta-head meta" translate="META"></h3>
-            <span class="entry-user-meta" ng-bind="entry.meta"></span>
+            <h3 class="entry-meta-head" translate="META"></h3>
+            <span ng-bind="entry.meta"></span>
           </li>
         </ul>
       </div><!--.entry-meta-->

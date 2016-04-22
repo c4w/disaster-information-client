@@ -176,10 +176,11 @@ app.directive 'singleEntry', ->
             '$rootScope'
             ($scope, $rootScope) ->
                 $scope.unselect = ->
+                    $scope.entry = false
                 $rootScope.$on 'entrySelected', (event, {entry}) ->
                     $scope.entry = entry
                 $rootScope.$on 'entryUnselected', (event) ->
-                    $scope.entry = undefined
+                    $scope.entry = false
         ]
     }
 
@@ -195,6 +196,7 @@ app.directive 'languageSwitch', ->
             '$scope'
             '$rootScope'
             ($translate, $scope, $rootScope) ->
+                $scope.key = DEFAULT_LANG
 
                 changeLanguage = (key) ->
                     $translate.use(key)
@@ -202,12 +204,11 @@ app.directive 'languageSwitch', ->
                     $rootScope.entriesShim = $rootScope.entries.filter (entry) ->
                         entry.lang is key
 
-                $scope.key = DEFAULT_LANG
+                $scope.changeLanguage = changeLanguage
 
                 $rootScope.$on 'entriesLoaded', ->
                     $scope.key = $rootScope.selectedLocale
                     changeLanguage $scope.key
 
-                $scope.changeLanguage = changeLanguage
         ]
     }

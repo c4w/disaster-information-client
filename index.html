@@ -11,24 +11,24 @@
   <body>
     <div class="container" ng-controller="mainCtrl" ng-cloak>
 
-      <header class="header">
+      <header id="header" class="site-meta">
         <language-switch></language-switch>
 
-        <div class="site-meta">
+        <div id="site-meta">
           <h1><a class="site-title" href="#" translate="TITLE"></a></h1>
           <p translate="DESCRIPTION"></p>
         </div><!--.site-meta-->
 
-        <nav ng-if="!entry">
-          <h2 class="hide" translate="ARCHIVES"></h2>
-          <entry-archive></entry-archive>
-        </nav>
-
       </header>
 
-      <main>
-        <div class="alert alert-danger alert-window" role="alert" ng-if="err" translate="MESSAGES.ERROR"></div>
+
+      <main id="main">
+        <entry-archive></entry-archive>
+
+        <div id="alert-window" class="alert alert-danger alert-window" role="alert" ng-if="err" translate="MESSAGES.ERROR"></div>
+
         <single-entry></single-entry>
+
       </main>
 
     </div><!--.container-->
