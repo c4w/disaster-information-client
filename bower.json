@@ -4,9 +4,9 @@
     "KamataRyo <mugil.cephalus+github@gmail.com>"
   ],
   "description": "disaster-informationのクライアント",
-  "main": "",
+  "main": "./src/app.js",
   "license": "MIT",
-  "homepage": "",
+  "homepage": "http://c4w.github.io/disaster-information-client/",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -19,7 +19,6 @@
     "angular": "^1.5.4",
     "angular-translate": "^2.11.0",
     "angular-translate-loader-static-files": "^2.11.0",
-    "angular-sanitize": "^1.5.5",
-    "angular-animate": "^1.5.5"
+    "angular-sanitize": "^1.5.5"
   }
 }

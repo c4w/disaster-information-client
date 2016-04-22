@@ -13,10 +13,7 @@ http://c4w.github.io/disaster-information-client
 
 ## contribution
 
-git clone
-
+```
+git clone https://github.com/c4w/disaster-information-client.git
 npm install
-
-bower install
-
-gulp
+```

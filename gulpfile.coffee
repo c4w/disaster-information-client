@@ -44,6 +44,10 @@ fileIOs = new FileIOs [
         src: ['./spec/spec/**/*.coffee']
         dest: './spec/spec'
     },{
+        name: 'gulpfile' # for user who don't have coffee-script -g
+        src: ['./gulpfile.coffee']
+        dest: './'
+    },{
         name: 'sass'
         src: ['./src/**/*.scss']
         dest: './src'
@@ -68,13 +72,15 @@ gulp.task 'coffee-app', coffeePipeline.apply(null, fileIOs.of 'app')
 
 gulp.task 'coffee-spec', coffeePipeline.apply(null, fileIOs.of 'spec')
 
+gulp.task 'coffee-gulpfile', coffeePipeline.apply(null, fileIOs.of 'gulpfile')
+
 gulp.task 'sass', ->
     gulp.src(fileIOs.src 'sass')
         .pipe plumber(errorHandler: notify.onError '<%= error.message %>')
         .pipe sass()
         .pipe gulp.dest(fileIOs.dest 'sass')
 
-gulp.task 'build', ['coffee-app','coffee-spec', 'sass']
+gulp.task 'build', ['coffee-app','coffee-spec', 'coffee-gulpfile', 'sass']
 
 gulp.task 'webserver', ->
     gulp.src('./')
@@ -84,7 +90,10 @@ gulp.task 'webserver', ->
             livereload: true
         }
 
+gulp.task 'notice', ->
+    console.log 'If you fix gulpfile.coffee, please reload gulp.'
+
 gulp.task 'default', ['build']
 
-gulp.task 'dev', ['build','webserver'], ->
+gulp.task 'dev', ['notice', 'build','webserver'], ->
     gulp.watch fileIOs.src(), ['build']

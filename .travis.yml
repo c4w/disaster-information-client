@@ -6,10 +6,6 @@ branches:
   only:
     - master
 
-before_script:
-  - ./node_modules/bower/bin/bower install
-  - ./node_modules/gulp/bin/gulp.js
-
 script: npm test
 
 after_success: bash ./bin/deploy.sh
