@@ -4,8 +4,10 @@ app = module 'disaster-information-client'
 beforeEach app
 
 
-describe 'test of test', ->
-    it 'should pass', ->
+describe 'test of initialization', ->
+
+    it '', ->
+        console.log app
         expect true
             .toEqual true
 

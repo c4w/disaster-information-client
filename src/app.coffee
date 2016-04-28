@@ -63,7 +63,6 @@ app.run [
             .catch (res) ->
                 console.log res
                 $rootScope.err = true
-
 ]
 
 
