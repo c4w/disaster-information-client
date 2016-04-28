@@ -1,0 +1,15 @@
+{
+  "TITLE": "Disaster informations",
+  "DESCRIPTION": "This is an experimental test site and all information is dummy. Visit <a href=\"https://github.com/c4w/disaster-information\">c4w/disaster-information@Github</a> for more detail.",
+  "ARCHIVES": "archives",
+  "CONSOLE": "console",
+  "POSTED_ON": "posted on",
+  "TAGS": "tag(s)",
+  "LANGUAGE": "language",
+  "POSTED_CONTENT": "posted content",
+  "RETURN": "return",
+  "META": "meta information",
+  "MESSAGES": {
+      "ERROR": "An error may happens."
+  }
+}

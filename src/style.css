@@ -1,0 +1,69 @@
+[ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important; }
+
+.language-switch {
+  margin-top: .5em; }
+
+.site-meta {
+  margin-top: 1em; }
+  .site-meta a.site-title {
+    color: inherit; }
+    .site-meta a.site-title:hover {
+      text-decoration: none;
+      opacity: .6; }
+
+.archived-entry-content {
+  padding: 0 1em .3em;
+  border-top: 1px dashed #666; }
+  .archived-entry-content:last-child {
+    border-bottom: 1px dashed #666; }
+
+.entry-meta-excerpt {
+  margin-top: .5em;
+  margin-bottom: 0; }
+
+.entry-title-excerpt {
+  font-weight: bold;
+  margin-top: .2em;
+  margin-bottom: .2em;
+  font-size: 1em; }
+
+.entry-body-excerpt {
+  margin-top: .2em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: hidden; }
+
+.alert-window {
+  margin: 1em; }
+
+article.single-entry {
+  margin: 1em;
+  padding: 1em;
+  border: 1px solid black; }
+
+.entry-title {
+  font-size: 1.5em; }
+
+.entry-meta-elements {
+  padding: 0;
+  list-style: none; }
+
+.entry-meta-elements li {
+  display: block; }
+
+.entry-meta-head {
+  font-weight: bold;
+  font-size: 1em;
+  display: inline; }
+
+.entry-tags {
+  padding: 0;
+  list-style: none;
+  display: inline; }
+  .entry-tags li.entry-tag {
+    display: inline; }
+    .entry-tags li.entry-tag:after {
+      content: ' '; }
+    .entry-tags li.entry-tag:last-child:after {
+      content: none; }

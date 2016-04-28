@@ -1,0 +1,39 @@
+<article ng-attr-id="{{entry.url}}" class="single-entry" ng-hide="err || !entry">
+  <a href="#" translate="RETURN" ng-click="unselect()"></a>
+  <h2 class="entry-title" ng-bind="entry.title"></h2><!--removed ng-attr-id="{{entry.url}}" -->
+    <div class="row">
+    <div class="col-xs-12 col-sm-3">
+      <div class="entry-meta">
+        <ul class="entry-meta-elements">
+          <li>
+            <h3 class="entry-meta-head" translate="POSTED_ON"></h3>
+            <span class="date" ng-bind="entry.date"></span>
+            <span class="time" ng-bind="entry.time"></span>
+          </li>
+
+          <li>
+            <h3 class="entry-meta-head" translate="TAGS"></h3>
+            <ul class="entry-tags">
+              <li class="entry-tag" ng-repeat="tag in entry.tags" ng-bind="tag"></li>
+            </ul>
+          </li>
+
+          <li>
+            <h3 class="entry-meta-head" translate="LANGUAGE"></h3>
+            <span ng-bind="entry.lang"></span>
+          </li>
+          <li>
+            <h3 class="entry-meta-head" translate="META"></h3>
+            <span ng-bind="entry.meta"></span>
+          </li>
+        </ul>
+      </div><!--.entry-meta-->
+    </div><!--.col-->
+
+    <div class="col-xs-12 col-sm-9">
+      <h3 class="hide" translate="POSTED_CONTENT"></h3>
+      <div class="entry-body" ng-bind-html="entry.body"></div>
+    </div><!--.col-->
+
+  </div><!--.row-->
+</article><!--.entry-content-->
