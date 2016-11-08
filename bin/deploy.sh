@@ -34,5 +34,5 @@ git config user.name "kamataryo"
 git config user.email "from_travis@example.com"
 git remote add origin "git@github.com:${TRAVIS_REPO_SLUG}.git"
 git add .
-git commit --quiet -m "Deploy from travis[no ci]"
+git commit -m "Deploy from travis[no ci]"
 git push --force origin gh-pages
