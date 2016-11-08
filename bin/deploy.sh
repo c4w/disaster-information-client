@@ -35,4 +35,4 @@ git config user.email "from_travis@example.com"
 git remote add origin "git@${GH_REF}"
 git add .
 git commit --quiet -m "Deploy from travis[no ci]"
-git push --force --quiet origin gh-pages > /dev/null 2>&1
+git push --force origin gh-pages
