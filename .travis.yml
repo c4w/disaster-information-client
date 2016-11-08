@@ -16,7 +16,3 @@ script:
 after_success:
   - openssl aes-256-cbc -K $encrypted_2bc4d1d38456_key -iv $encrypted_2bc4d1d38456_iv -in id_ecdsa.enc -out ~/.ssh/id_ecdsa -d
   - bash ./bin/deploy.sh
-
-env:
-  global:
-  - GH_REF: github.com/c4w/disaster-information-client.git
