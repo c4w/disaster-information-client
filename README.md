@@ -11,9 +11,11 @@ http://c4w.github.io/disaster-information-client
 これはテストサイトです。
 災害情報として掲載されている情報は全てダミーです。
 
-## contribution
+## デプロイ
 
 ```
 git clone https://github.com/c4w/disaster-information-client.git
+cd disaster-information-client
 npm install
+npm run build
 ```

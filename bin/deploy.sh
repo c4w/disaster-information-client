@@ -26,11 +26,13 @@ gulpfile.js
 .travis.yml
 src/*.coffee
 src/*.scss
-.gitignore" > .gitignore
+.gitignore
+id_ecdsa.enc" > .gitignore
 
 git init
 git config user.name "kamataryo"
 git config user.email "from_travis@example.com"
+git remote add origin "git@${GH_REF}"
 git add .
-git commit --quiet -m "Deploy from travis"
-git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages > /dev/null 2>&1
+git commit --quiet -m "Deploy from travis[no ci]"
+git push --force --quiet origin gh-pages > /dev/null 2>&1

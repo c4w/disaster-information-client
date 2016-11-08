@@ -8,9 +8,10 @@ branches:
 
 script: npm test
 
-after_success: bash ./bin/deploy.sh
+after_success:
+  - openssl aes-256-cbc -K $encrypted_2bc4d1d38456_key -iv $encrypted_2bc4d1d38456_iv -in id_ecdsa.enc -out ~/.ssh/id_ecdsa -d
+  - bash ./bin/deploy.sh
 
 env:
   global:
   - GH_REF: github.com/c4w/disaster-information-client.git
-  - secure: GAUQeqUaEqSd68mZ2BcHI7biNMX61G9XTE2Z34fWTUNp1f7FGB3n+q0skR5SLH+eskfsgzwwzAdC02TK5+8T67gVj8Xlx18yvXJF2w9reMwPMDNCAfVsGfOLqWno3Jh+8IOHRJuIScnrJihnpjjF8moUVyF+0XAGKGF8PRJBwqFrmiAVO3VWYlACiVWGFJ95vCArLOa/On3bwXRP4iblYYqM4wFreoDeinek9ttvWPI6xxfTxkmD+Wb5tRiE9ct7TXoNKFdpg8EDA2U9AXphHrXWHwbrFi8rYQY7JCVdoFlW+oEFPKFrcoIBdV07odSSUTjGnXh3eV/sa112SsjCVF9FHmteRwZp+U76v4R0AovdkJmKyVdWMnUmum0ZSZH0SiwYzAvj5D5D57b8f+F7ruC+nKETQSs2TxA9Itb1yNvsetcS83z3YG2kwr1DbrGxbWjeBlOU23DYQQMkz99u+TUA0mjTPCYbJW9pLMA9fOVUy2qtGlYfdKcj+mP5ppay4rU0NItJCdXtv6qHopIPkI5K1eF+nrUMpHPrdPI0aO50YlUdRDovgdpD6J84N8QV4t35Kt7KOfrabc8iHw0/CoyFulzJn+kVWAeA5e3XosIy1u+qf2j59AyEJI9IbFBsLmhvyjUyleuRGChO/YONMG5jlwWAavGfMElKxgkQltk=
